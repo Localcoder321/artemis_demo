@@ -1,0 +1,16 @@
+CREATE TABLE orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE outbox (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    aggregate_id BIGINT,
+    payload VARCHAR(255),
+    processed BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE inbox (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    message_id VARCHAR(255) UNIQUE
+);

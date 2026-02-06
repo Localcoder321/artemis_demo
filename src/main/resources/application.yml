@@ -1,0 +1,61 @@
+spring:
+  artemis:
+    broker-url: tcp://localhost:61616
+    user: artemis
+    password: artemis
+    mode: native
+
+  jms:
+    pub-sub-domain: false
+    listener:
+      auto-startup: true
+      concurrency: 1
+      max-concurrency: 5
+    template:
+      delivery-mode: persistent
+      qos-enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,env,beans,configprops,loggers,threaddump,heapdump
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  metrics:
+    enable:
+      jvm: true
+      process: true
+      system: true
+      logback: true
+      tomcat: true
+      hikaricp: true
+      jdbc: true
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      slo:
+        http.server.requests: 50ms,100ms,200ms,400ms,800ms,1s,2s,5s
+    tags:
+      application: ${spring.application.name}
+      environment: development
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+info:
+  app:
+    name: Artemis Demo Application
+    description: Spring Boot application with Artemis JMS
+    version: 0.0.1-SNAPSHOT
+
